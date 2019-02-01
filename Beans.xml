@@ -1,0 +1,22 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<beans xmlns = "http://www.springframework.org/schema/beans"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+   <bean id = "myController" class = "DemoController">
+      <constructor-arg type = "TorusModel" ref = "myModel"/>
+      <constructor-arg type = "TorusConfigurator" ref = "myConfigurator"/>
+      <property name = "fxmlFilePath" value = "/view.fxml"/>
+   </bean>
+   
+   <bean id = "myModel" class = "Board">
+      <constructor-arg index = "0" value = "100"/>
+      <constructor-arg index = "1" value = "100"/>
+   </bean>
+   
+   <bean id = "myConfigurator" class = "TorusConfigurator">
+      <constructor-arg type = "TorusInterface" ref = "myModel"/>
+   </bean>
+</beans>

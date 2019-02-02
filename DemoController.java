@@ -49,12 +49,6 @@ public class DemoController extends FXMLController {
 		// resizable display
 		canvas.getWidth().bind(VBox.getWidth());
 		canvas.getHeight().bind(VBox.getHeight());
-		canvas.getWidth().addListener( (o, oldVal, newVal) -> {
-			paint();
-		});
-		anvas.getHeight().addListener( (o, oldVal, newVal) -> {
-			paint();
-		});
 		
 		displayer = new TorusToCanvasDisplayer(canvas, model);
 		

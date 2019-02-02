@@ -16,8 +16,10 @@ public class TorusToCanvasDisplayer {
 	private DoubleProperty cellLength = new SimpleDoubleProperty();
 	
 	private GraphicsContext gc;
-	private double canvasHeight, canvasWidth;
 	private TorusInterface torus;
+	
+	private DoubleProperty canvasWidthProperty = new SimpleDoubleProperty();
+	private DoubleProperty canvasHeightProperty = new SimpleDoubleProperty();
 	
 	/**
 	 * @param canvas The canvas associated with the displayer.
@@ -31,9 +33,16 @@ public class TorusToCanvasDisplayer {
 		cornerX.set(0);
 		cornerY.set(0);
 		cellLength.set(10);
+		canvasWidthProperty.set(400.0d);
+	        canvasHeightProperty.set(339.0d):
 		
-		canvasWidth = canvas.getWidth();
-		canvasHeight = canvas.getHeight();
+		// paint() when canvas changes in size
+		canvasWidthProperty.addListener( (o, oldVal, newVal) -> {
+			paint();
+		});
+		canvasHeightProperty.addListener( (o, oldVal, newVal) -> {
+			paint();
+		});
 	}
 	
 	/**
@@ -42,8 +51,8 @@ public class TorusToCanvasDisplayer {
 	 */
 	public void paint(){
 		double cl = cellLength.get();
-		for(int i = (int) - Math.ceil(cornerX.get() / cl); i < (canvasWidth - cornerX.get()) / cl ;i ++) {
-			for(int j = (int) - Math.ceil(cornerY.get() / cl); j < (canvasHeight - cornerY.get()) / cl ;j ++) {
+		for(int i = (int) - Math.ceil(cornerX.get() / cl); i < (canvasWidthProperty.get() - cornerX.get()) / cl ;i ++) {
+			for(int j = (int) - Math.ceil(cornerY.get() / cl); j < (canvasHeightProperty.get() - cornerY.get()) / cl ;j ++) {
 				if(torus.getValue(i, j) > 0) {
 					gc.setFill(Color.BLACK);
 				} else gc.setFill(Color.WHITE);
@@ -74,5 +83,22 @@ public class TorusToCanvasDisplayer {
 	
 	public void setCellLength(DoubleProperty cellLength) {
 		this.cellLength = cellLength;
+	}
+	
+		
+	public void setCanvasWidthProperty(DoubleProperty canvasWidthProperty) {
+		this.canvasWidthProperty = canvasWidthProperty;
+	}
+	
+	public DoubleProperty getCanvasWidthProperty() {
+		return canvasWidthProperty;
+	}
+	
+	public void setCanvasHeightProperty(DoubleProperty canvasHeightProperty) {
+		this.canvasHeighthProperty = canvasHeightProperty;
+	}
+	
+	public DoubleProperty getCanvasHeightProperty() {
+		return canvasHeightProperty;
 	}
 }

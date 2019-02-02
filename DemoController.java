@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.VBox;
 
 public class DemoController extends FXMLController {
 	@FXML private Button btnStart;
@@ -22,6 +23,7 @@ public class DemoController extends FXMLController {
 	@FXML private Slider frameDuration;
 	
 	@FXML private Canvas canvas;
+	@FXML private VBox container;
 	
 	private TorusModel model;
 	private TorusConfigurator configurator;
@@ -43,6 +45,16 @@ public class DemoController extends FXMLController {
 		fillFactorProperty.set(0.5);
 		isRunningProperty.set(true);
 		frameDurationProperty.set(10L);
+		
+		// resizable display
+		canvas.getWidth().bind(VBox.getWidth());
+		canvas.getHeight().bind(VBox.getHeight());
+		canvas.getWidth().addListener( (o, oldVal, newVal) -> {
+			paint();
+		});
+		anvas.getHeight().addListener( (o, oldVal, newVal) -> {
+			paint();
+		});
 		
 		displayer = new TorusToCanvasDisplayer(canvas, model);
 		
